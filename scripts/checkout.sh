@@ -28,3 +28,4 @@ else
 fi
 
 git checkout ${VERSION}
+echo "${VERSION}" > ../version

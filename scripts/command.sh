@@ -8,7 +8,13 @@ set -eux
 : "${PLATFORM?}"
 : "${COMMAND?}"
 
-TAG="ejconlon/idr-packaging-$(echo ${PLATFORM} | tr / -)"
+FRESH=${FRESH:-false}
+
+if [ ${FRESH} = true ]; then
+  TAG="$(echo ${PLATFORM} | tr / :)"
+else
+  TAG="ejconlon/idr-packaging-$(echo ${PLATFORM} | tr / -)"
+fi
 
 DIR=$(cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
 

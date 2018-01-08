@@ -7,6 +7,8 @@ cd Idris-dev
 cabal sandbox init
 cabal update
 
-echo "CABALFLAGS += -f FFI -f GMP" > custom.mk
+FLAGS="-f FFI -f release"
 
-make
+cabal install --only-dependencies ${FLAGS}
+
+cabal install --prefix=/workspace/dist ${FLAGS}

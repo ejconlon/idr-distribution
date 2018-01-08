@@ -7,4 +7,4 @@ set -eux
 
 : "${PLATFORM?}"
 
-COMMAND="bash ./scripts/test.sh" ./scripts/command.sh
+FRESH=true COMMAND="bash ./scripts/test.sh" ./scripts/command.sh
