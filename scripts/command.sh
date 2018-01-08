@@ -14,6 +14,16 @@ DIR=$(cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
 
 WORKSPACE="${DIR}/workspace"
 
+if [ -f ${WORKSPACE}/platform ]; then
+  PREV_PLATFORM="$(cat ${WORKSPACE}/platform)"
+  if [ "${PREV_PLATFORM}" != "${PLATFORM}" ]; then
+    echo "Need to clean workspace: ${PREV_PLATFORM} detected"
+    exit 1
+  fi
+else
+  echo "${PLATFORM}" > ${WORKSPACE}/platform
+fi
+
 rm -rf ${WORKSPACE}/scripts
 mkdir ${WORKSPACE}/scripts
 cp common/* ${WORKSPACE}/scripts

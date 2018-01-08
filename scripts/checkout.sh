@@ -7,6 +7,8 @@ set -eux
 
 : "${VERSION?}"
 
+CLEAN=${CLEAN:-true}
+
 DIR=$(cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
 
 WORKSPACE="${DIR}/workspace"
@@ -15,8 +17,9 @@ if [ -d ${WORKSPACE} ]; then
   cd ${WORKSPACE}
   rm -rf scripts
   cd Idris-dev
-  # TODO clean up
-  # git clean -fdx
+  if [ ${CLEAN} = true ]; then
+    git clean -fdx
+  fi
 else
   mkdir ${WORKSPACE}
   cd ${WORKSPACE}
