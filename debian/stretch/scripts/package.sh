@@ -16,18 +16,44 @@ rm -rf debian
 
 mkdir -p debian
 
-cp /workspace/Idris-dev/LICENSE debian/copyright
-
 cat << EOF > debian/control
+Source: idris
 Section: Development
-Priority: optional
 Maintainer: ${MAINTAINER_NAME} <${MAINTAINER_EMAIL}>
-Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 10.0.0)
+Standards-Version: 3.9.3
 
 Package: idris
-Version: $(cat /workspace/version)
+Priority: extra
 Architecture: amd64
 Depends: libffi-dev
 Homepage: http://www.idris-lang.org/
 Description: Compiler for the Idris programming language
 EOF
+
+cp /workspace/Idris-dev/LICENSE debian/copyright
+
+cat << EOF > debian/changelog
+idris (1.2.0) unstable; urgency=low
+
+  * See https://raw.githubusercontent.com/idris-lang/Idris-dev/v$(cat /workspace/version)/CHANGELOG.md .
+
+ -- ${MAINTAINER_NAME} <${MAINTAINER_EMAIL}>  $(date -R)
+EOF
+
+cat << EOF > debian/rules
+#!/usr/bin/make -f
+%:
+	dh \$@
+EOF
+
+cat << EOF > debian/compat
+10
+EOF
+
+# cat << EOF > Makefile
+# install:
+# 	echo "hi"
+# EOF
+
+# debuild -us -uc
