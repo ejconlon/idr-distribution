@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Checkout Idris-dev into a workspace dir
-# EXAMPLE: ./scripts/checkout.sh v1.2.0
+# EXAMPLE: VERSION=v1.2.0 ./scripts/checkout.sh
 
-set -eu
+set -eux
 
-VERSION="$1"
+: "${VERSION?}"
 
 DIR=$(cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)
 
@@ -15,7 +15,8 @@ if [ -d ${WORKSPACE} ]; then
   cd ${WORKSPACE}
   rm -rf scripts
   cd Idris-dev
-  git clean -fdx
+  # TODO clean up
+  # git clean -fdx
 else
   mkdir ${WORKSPACE}
   cd ${WORKSPACE}

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Prepare a docker container to build Idris
-# EXAMPLE: ./scripts/prepare.sh debian/stretch
+# EXAMPLE: PLATFORM=debian/stretch ./scripts/prepare.sh
 
-set -eu
+set -eux
 
-PLATFORM="$1"
+: "${PLATFORM?}"
 
 TAG="ejconlon/idr-packaging-$(echo ${PLATFORM} | tr / -)"
 

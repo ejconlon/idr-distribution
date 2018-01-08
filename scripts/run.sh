@@ -1,13 +1,15 @@
 #!/bin/bash
 
 # Runs all steps to build for a platform
-# EXAMPLE: ./scripts/run.sh debian/stretch v1.2.0
+# EXAMPLE: PLATFORM=debian/stretch VERSION=v1.2.0 ./scripts/run.sh
 
-set -eu
+set -eux
 
-PLATFORM="$1"
-VERSION="$2"
+: "${PLATFORM?}"
+: "${VERSION?}"
 
-./scripts/prepare.sh ${PLATFORM}
-./scripts/checkout.sh ${VERSION}
-./scripts/build.sh ${PLATFORM} ${VERSION}
+./scripts/prepare.sh
+./scripts/checkout.sh
+./scripts/build.sh
+./scripts/package.sh
+./scripts/test.sh
