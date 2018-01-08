@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Checkout Idris-dev into a workspace dir
-# EXAMPLE: VERSION=v1.2.0 ./scripts/checkout.sh
+# EXAMPLE: VERSION=1.2.0 ./scripts/checkout.sh
 
 set -eux
 
@@ -27,5 +27,5 @@ else
   cd Idris-dev
 fi
 
-git checkout ${VERSION}
+git checkout v${VERSION}
 echo "${VERSION}" > ../version

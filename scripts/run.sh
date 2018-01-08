@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Runs all steps to build for a platform
-# EXAMPLE: PLATFORM=debian/stretch VERSION=v1.2.0 ./scripts/run.sh
+# EXAMPLE: PLATFORM=debian/stretch VERSION=1.2.0 ./scripts/run.sh
 
 set -eux
 
