@@ -5,55 +5,58 @@ set -eux
 MAINTAINER_NAME="Eric Conlon"
 MAINTAINER_EMAIL="ejconlon@gmail.com"
 
-# dh_make reads maintainer name from a user account, so we create a dummy one
-# adduser --no-create-home --disabled-login --gecos "${MAINTAINER_NAME},,,," maintainer
+VERSION="$(cat version)"
+RELEASE_DIR="/workspace/packaging/idris"
 
-cd idris-$(cat version)
+rm -rf ${RELEASE_DIR}
+mkdir -p ${RELEASE_DIR}
+cd ${RELEASE_DIR}
+mkdir -p DEBIAN
 
-rm -rf debian
-
-# USER=maintainer dh_make -y -s -n -c custom --copyrightfile /workspace/Idris-dev/LICENSE -e ${MAINTAINER_EMAIL}
-
-mkdir -p debian
-
-cat << EOF > debian/control
-Source: idris
-Section: Development
-Maintainer: ${MAINTAINER_NAME} <${MAINTAINER_EMAIL}>
-Build-Depends: debhelper (>= 10.0.0)
-Standards-Version: 3.9.3
-
+cat << EOF > DEBIAN/control
 Package: idris
-Priority: extra
 Architecture: amd64
-Depends: libffi-dev
+Maintainer: ${MAINTAINER_NAME} <${MAINTAINER_EMAIL}>
+Priority: extra
+Version: ${VERSION}
+Depends: libffi-dev, libgmp-dev
 Homepage: http://www.idris-lang.org/
 Description: Compiler for the Idris programming language
+	Read more at https://raw.githubusercontent.com/idris-lang/Idris-dev/v${VERSION}/README.md .
+	Packaged with https://github.com/ejconlon/idr-distribution .
 EOF
 
-cp /workspace/Idris-dev/LICENSE debian/copyright
+cp /workspace/Idris-dev/LICENSE DEBIAN/copyright
 
-cat << EOF > debian/changelog
-idris (1.2.0) unstable; urgency=low
+cat << EOF > DEBIAN/changelog
+idris (${VERSION}) unstable; urgency=low
 
-  * See https://raw.githubusercontent.com/idris-lang/Idris-dev/v$(cat /workspace/version)/CHANGELOG.md .
+  * See https://raw.githubusercontent.com/idris-lang/Idris-dev/v${VERSION}/CHANGELOG.md .
 
  -- ${MAINTAINER_NAME} <${MAINTAINER_EMAIL}>  $(date -R)
 EOF
 
-cat << EOF > debian/rules
-#!/usr/bin/make -f
-%:
-	dh \$@
+cat << EOF > DEBIAN/postinst
+#!/bin/bash
+set -e
 EOF
 
-cat << EOF > debian/compat
-10
-EOF
+for BINARY in $(ls /workspace/dist/bin); do
+  echo "ln -sf /opt/idris-${VERSION}/bin/${BINARY} /usr/local/bin/${BINARY}" >> DEBIAN/postinst
+done
 
-# cat << EOF > Makefile
-# install:
-# 	echo "hi"
-# EOF
+chmod +x DEBIAN/postinst
 
-# debuild -us -uc
+INSTALL_PATH="opt/idris-${VERSION}"
+mkdir -p ${INSTALL_PATH}
+pushd ${INSTALL_PATH}
+  cp -r /workspace/dist/* ./
+popd
+
+cd ..
+
+dpkg-deb --build idris
+
+mv idris.deb idris_${VERSION}_amd64.deb
+
+dpkg -c idris_${VERSION}_amd64.deb

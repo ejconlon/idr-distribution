@@ -11,4 +11,4 @@ FLAGS="-f FFI -f release"
 
 cabal install --only-dependencies ${FLAGS}
 
-cabal install --prefix=/workspace/idris-$(cat ../version) ${FLAGS}
+cabal install --prefix=/workspace/dist ${FLAGS}
