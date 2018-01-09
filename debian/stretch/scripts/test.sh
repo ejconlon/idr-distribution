@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# REMOTE SCRIPT: tests the generated deb on a clean image
+
 set -eux
 
 VERSION="$(cat /workspace/version)"

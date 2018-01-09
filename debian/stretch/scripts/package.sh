@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# REMOTE SCRIPT: builds a deb
+
 set -eux
 
 MAINTAINER_NAME="Eric Conlon"
