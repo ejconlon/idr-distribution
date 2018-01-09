@@ -13,6 +13,6 @@ GITHUB_REPO="${GITHUB_REPO:-idr-distribution}"
 github-release upload \
     --user ${GITHUB_USERNAME} \
     --repo ${GITHUB_REPO} \
-    --tag ${VERSION} \
-    --name "debian/stretch amd64" \
+    --tag v${VERSION} \
+    --name idris_${VERSION}_amd64.deb \
     --file workspace/packaging/idris_${VERSION}_amd64.deb

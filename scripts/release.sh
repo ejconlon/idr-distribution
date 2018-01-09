@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start release process
-# EXAMPLE: VERSION=v1.2.0 ./scripts/release.sh
+# EXAMPLE: VERSION=1.2.0 ./scripts/release.sh
 
 set -eux
 
@@ -14,5 +14,5 @@ GITHUB_REPO="${GITHUB_REPO:-idr-distribution}"
 github-release release \
     --user ${GITHUB_USERNAME} \
     --repo ${GITHUB_REPO} \
-    --tag ${VERSION} \
+    --tag v${VERSION} \
     --pre-release
