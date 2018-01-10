@@ -5,11 +5,12 @@
 set -eux
 
 VERSION="$(cat /workspace/version)"
+RELEASE="$(cat /workspace/release)"
 
 apt-get update
 apt-get install -y libffi-dev libgmp-dev
 
-dpkg -i /workspace/packaging/idris_${VERSION}_amd64.deb
+dpkg -i /workspace/packaging/idris_${VERSION}-${RELEASE}_amd64.deb
 
 echo ${PATH}
 ls /usr/local/bin

@@ -6,6 +6,7 @@
 set -eux
 
 : "${VERSION?}"
+: "${RELEASE?}"
 
 CLEAN=${CLEAN:-true}
 
@@ -29,3 +30,4 @@ fi
 
 git checkout v${VERSION}
 echo "${VERSION}" > ../version
+echo "${RELEASE}" > ../release

@@ -8,6 +8,8 @@ MAINTAINER_NAME="Eric Conlon"
 MAINTAINER_EMAIL="ejconlon@gmail.com"
 
 VERSION="$(cat version)"
+RELEASE="$(cat release)"
+
 RELEASE_DIR="/workspace/packaging/idris"
 
 rm -rf ${RELEASE_DIR}
@@ -20,7 +22,7 @@ Package: idris
 Architecture: amd64
 Maintainer: ${MAINTAINER_NAME} <${MAINTAINER_EMAIL}>
 Priority: extra
-Version: ${VERSION}
+Version: ${VERSION}-${RELEASE}
 Depends: libffi-dev, libgmp-dev
 Homepage: http://www.idris-lang.org/
 Description: Compiler for the Idris programming language
@@ -31,7 +33,7 @@ EOF
 cp /workspace/Idris-dev/LICENSE DEBIAN/copyright
 
 cat << EOF > DEBIAN/changelog
-idris (${VERSION}) unstable; urgency=low
+idris (${VERSION}-${RELEASE}) unstable; urgency=low
 
   * See https://raw.githubusercontent.com/idris-lang/Idris-dev/v${VERSION}/CHANGELOG.md .
 
@@ -59,6 +61,6 @@ cd ..
 
 dpkg-deb --build idris
 
-mv idris.deb idris_${VERSION}_amd64.deb
+mv idris.deb idris_${VERSION}-${RELEASE}_amd64.deb
 
-dpkg -c idris_${VERSION}_amd64.deb
+dpkg -c idris_${VERSION}-${RELEASE}_amd64.deb

@@ -11,7 +11,7 @@ FLAGS="-f GMP -f FFI -f release -f freestanding --disable-documentation --disabl
 
 echo "CABALFLAGS += ${FLAGS}" > custom.mk
 
-export IDRIS_LIB_DIR="./libs"
+export IDRIS_LIB_DIR="libs"
 
 make
 
